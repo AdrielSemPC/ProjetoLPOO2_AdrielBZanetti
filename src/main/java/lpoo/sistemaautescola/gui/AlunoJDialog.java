@@ -4,12 +4,30 @@
  */
 package lpoo.sistemaautescola.gui;
 
+import classes.Aluno;
+
 /**
  *
  * @author adrie
  */
 public class AlunoJDialog extends javax.swing.JDialog {
+    private Aluno aluno;
+    
+    public Aluno getAluno() {
+        return this.aluno;
+    }
 
+//    public void setAluno(Aluno aluno) {
+//        this.aluno = aluno;
+//        txtNome.setText(aluno.getNome());
+//        txtCPF.setText(aluno.getCpf());
+//        txtTelefone.setText(aluno.getTelefone());
+//        txtDataNasc.setText(aluno.getData_de_nasc());
+//        txtRenach.setText(aluno.getRenach());
+//        txtMatricula.setText(aluno.getMatricula());
+//    }
+    
+    
     /**
      * Creates new form PessoaFrame
      */

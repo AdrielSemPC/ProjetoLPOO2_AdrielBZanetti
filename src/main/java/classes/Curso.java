@@ -22,7 +22,7 @@ public class Curso implements Serializable {
    @GeneratedValue(strategy = GenerationType.SEQUENCE)
    private int id;
    
-   @Column(nullable = false)
+   @Column(length = 1, nullable = false)
    @Enumerated(EnumType.STRING)
    private Categoria categoria;
    
@@ -33,16 +33,19 @@ public class Curso implements Serializable {
    @Temporal(javax.persistence.TemporalType.DATE)
    private Date data_inicio;
    
-   @ManyToOne(cascade = CascadeType.ALL)
-   @JoinColumn(name = "instrutor_id", nullable = false)
+   //@ManyToOne(cascade = CascadeType.ALL)
+   @ManyToOne
+   @JoinColumn(name = "instrutor_id")
    private Instrutor instrutor;
    
-   @ManyToOne(cascade = CascadeType.ALL)
-   @JoinColumn(name = "aluno_id", nullable = false)
+   //@ManyToOne(cascade = CascadeType.ALL)
+   @ManyToOne
+   @JoinColumn(name = "aluno_id")
    private Aluno aluno;
    
-   @ManyToOne(cascade = CascadeType.ALL)
-   @JoinColumn(name = "administrativo_id", nullable = false)
+   //@ManyToOne(cascade = CascadeType.ALL)
+   @ManyToOne
+   @JoinColumn(name = "administrativo_id")
    private Administrativo administrativo;
    
    @ElementCollection

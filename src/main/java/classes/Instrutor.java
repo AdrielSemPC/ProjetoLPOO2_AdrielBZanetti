@@ -15,6 +15,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "tb_Instrutor")
+@DiscriminatorValue("INSTRUTOR")
 public class Instrutor extends Pessoa{
     @Column(length = 11, nullable = false)
     private String cnh;

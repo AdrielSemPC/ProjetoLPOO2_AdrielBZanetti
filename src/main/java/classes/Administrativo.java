@@ -14,6 +14,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "tb_Administrativo")
+@DiscriminatorValue("ADMINISTRATIVO")
 public class Administrativo extends Pessoa{
     
     @Column(name = "cargo", nullable = false)

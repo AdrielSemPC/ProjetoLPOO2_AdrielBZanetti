@@ -15,6 +15,7 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "tipo_pessoa", length = 15, discriminatorType = DiscriminatorType.STRING)
 @Table(name = "tb_Pessoa")
 public abstract class Pessoa implements Serializable {
     @Id

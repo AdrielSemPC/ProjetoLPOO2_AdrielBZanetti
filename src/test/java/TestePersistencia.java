@@ -44,6 +44,8 @@ public class TestePersistencia {
     //
     @Test
     public void teste(){
+        
+        try {
         Administrativo adm = new Administrativo();
         Aluno al = new Aluno();
         Curso c = new Curso(); //quase
@@ -58,7 +60,11 @@ public class TestePersistencia {
         adm.setData_de_nasc(data);
         adm.setTelefone("54912345678");
         adm.setCargo(Cargo.RECEPCIONISTA);
-        adm.addCurso(c);
+//        adm.addCurso(c);
+
+jpa.persist(adm);
+        
+        
         
         calendar.set(1995, Calendar.JULY, 30);
         data = calendar.getTime();
@@ -68,9 +74,12 @@ public class TestePersistencia {
         i.setData_de_nasc(data);
         i.setTelefone("55913249876");
         i.setCnh("2222");
-        i.addCurso(c);
+//        i.addCurso(c);
+
+
+            jpa.persist(i);
         
-        calendar.set(2006, Calendar.MAY, 5);
+        calendar.set(2006, Calendar.MAY, 6);
         data = calendar.getTime();
         
         al.setNome("Felipe");
@@ -79,7 +88,9 @@ public class TestePersistencia {
         al.setRenach("1111");
         al.setMatricula("1234");
         al.setTelefone("56978945632");
-        al.addCurso(c);
+//        al.addCurso(c);
+
+            jpa.persist(al);
         
 //        System.out.println(al.getCurso());
         
@@ -88,14 +99,20 @@ public class TestePersistencia {
         c.setCarga_horaria(60);
         c.setCategoria(Categoria.A);
         c.setData_inicio(data);
+        Aluno alx = (Aluno)jpa.find(Aluno.class, (Integer)al.getId());
+        Administrativo admx = (Administrativo)jpa.find(Administrativo.class, (Integer)adm.getId());
+        Instrutor ix = (Instrutor)jpa.find(Instrutor.class, (Integer)i.getId());
+        c.setAluno(alx);
+        c.setAdministrativo(admx);
+        c.setInstrutor(ix);
         
 //        al.setCurso(c);
 //        ha.setCurso(c);
         
-        try {
-            jpa.persist(adm);
-            jpa.persist(i);
-            jpa.persist(al);
+        
+            
+            
+            
             jpa.persist(c);
         } catch (Exception ex) {
             Logger.getLogger(TestePersistencia.class.getName()).log(Level.SEVERE, null, ex);

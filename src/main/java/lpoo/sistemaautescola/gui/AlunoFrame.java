@@ -5,18 +5,24 @@
 package lpoo.sistemaautescola.gui;
 
 import classes.Aluno;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import lpoo.sistemaautoescola.dao.PersistenciaJPA;
 
 /**
  *
  * @author adrie
  */
 public class AlunoFrame extends javax.swing.JFrame {
-
+    PersistenciaJPA jpa;
     /**
      * Creates new form PessoaFrame
      */
     public AlunoFrame() {
         initComponents();
+        jpa = new PersistenciaJPA();
+        carregaAlunos();
     }
 
     /**
@@ -42,6 +48,8 @@ public class AlunoFrame extends javax.swing.JFrame {
         lblCPF = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         txtCPF = new javax.swing.JTextField();
+        lblMatricula = new javax.swing.JLabel();
+        txtMatricula = new javax.swing.JTextField();
 
         jLabel3.setText("jLabel3");
 
@@ -72,7 +80,7 @@ public class AlunoFrame extends javax.swing.JFrame {
         pnlTabela.setLayout(pnlTabelaLayout);
         pnlTabelaLayout.setHorizontalGroup(
             pnlTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlPessoas, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+            .addComponent(pnlPessoas, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
         );
         pnlTabelaLayout.setVerticalGroup(
             pnlTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -80,8 +88,18 @@ public class AlunoFrame extends javax.swing.JFrame {
         );
 
         btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnRemover.setText("Remover");
 
@@ -109,6 +127,7 @@ public class AlunoFrame extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
+        lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTitulo.setText("Cadastro de Novo Aluno");
 
         lblNome.setText("Nome:");
@@ -127,22 +146,39 @@ public class AlunoFrame extends javax.swing.JFrame {
             }
         });
 
+        lblMatricula.setText("Matrícula:");
+
+        txtMatricula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtMatriculaKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlCabecalhoLayout = new javax.swing.GroupLayout(pnlCabecalho);
         pnlCabecalho.setLayout(pnlCabecalhoLayout);
         pnlCabecalhoLayout.setHorizontalGroup(
             pnlCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCabecalhoLayout.createSequentialGroup()
                 .addGroup(pnlCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTitulo)
                     .addGroup(pnlCabecalhoLayout.createSequentialGroup()
-                        .addComponent(lblCPF)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlCabecalhoLayout.createSequentialGroup()
-                        .addComponent(lblNome)
+                        .addGap(6, 6, 6)
+                        .addGroup(pnlCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(pnlCabecalhoLayout.createSequentialGroup()
+                                .addComponent(lblNome)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlCabecalhoLayout.createSequentialGroup()
+                                .addComponent(lblCPF)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(42, 42, 42)
+                        .addComponent(lblMatricula)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlCabecalhoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblTitulo)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlCabecalhoLayout.setVerticalGroup(
             pnlCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,11 +187,14 @@ public class AlunoFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNome)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblMatricula)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCPF)
-                    .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCPF))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -183,13 +222,33 @@ public class AlunoFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtCPFKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCPFKeyReleased
+        pesquisaPessoas(txtCPF.getText(), 1);
+    }//GEN-LAST:event_txtCPFKeyReleased
+
     private void txtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyReleased
-        pesquisaNome(txtNome.getText());
+        pesquisaPessoas(txtNome.getText(), 0);
     }//GEN-LAST:event_txtNomeKeyReleased
 
-    private void txtCPFKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCPFKeyReleased
-        pesquisaCPF(txtNome.getText());
-    }//GEN-LAST:event_txtCPFKeyReleased
+    private void txtMatriculaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMatriculaKeyReleased
+        pesquisaPessoas(txtMatricula.getText(), 2);
+    }//GEN-LAST:event_txtMatriculaKeyReleased
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        AlunoJDialog tela = new AlunoJDialog(this, rootPaneCheckingEnabled);
+        tela.setVisible(true);
+        carregaAlunos();
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+//        Aluno alSel = getAlunoSelecionado();
+//        if (alSel != null) {
+//            AlunoJDialog tela = new AlunoJDialog(this, rootPaneCheckingEnabled);
+//            tela.setAluno(alSel);
+//            tela.setVisible(true);
+//            carregaAlunos();
+//        }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,13 +291,8 @@ public class AlunoFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnRemover;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable4;
-    private javax.swing.JTable jTable5;
     private javax.swing.JLabel lblCPF;
+    private javax.swing.JLabel lblMatricula;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel pnlBotoes;
@@ -247,14 +301,52 @@ public class AlunoFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pnlTabela;
     private javax.swing.JTable tblPessoas;
     private javax.swing.JTextField txtCPF;
+    private javax.swing.JTextField txtMatricula;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
 
-    private void pesquisaNome(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private void pesquisaPessoas(String arg, int tipo) {
+        List<Aluno> listaAlunos = jpa.getAlunos(arg, tipo);
+        DefaultTableModel modeloTabela = (DefaultTableModel) tblPessoas.getModel();
+        modeloTabela.setRowCount(0);
+        for (Aluno a : listaAlunos) {
+                Object[] linha = {
+                    a.getNome(),
+                    a.getCpf(),
+                    a.getMatricula(),
+                    a.getRenach(),
+                    a.getTelefone()
+                };
+            modeloTabela.addRow(linha);
+        }
+    }
+    
+    private void carregaAlunos(){
+        List<Aluno> listaAlunos = jpa.getAlunos();
+        DefaultTableModel modeloTabela = (DefaultTableModel) tblPessoas.getModel();
+        modeloTabela.setRowCount(0);
+        for (Aluno a : listaAlunos) {
+                Object[] linha = {
+                    a.getNome(),
+                    a.getCpf(),
+                    a.getMatricula(),
+                    a.getRenach(),
+                    a.getTelefone()
+                };
+            modeloTabela.addRow(linha);
+        }
     }
 
-    private void pesquisaCPF(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private Aluno getAlunoSelecionado() {
+        int linhaSelecionada = tblPessoas.getSelectedRow(); // Obtém a linha selecionada
+        if (linhaSelecionada >= 0) { // Quando não tem nenhum objeto selecionado retorna -1
+            DefaultTableModel modeloTabela = (DefaultTableModel) tblPessoas.getModel();
+            Aluno alSelecionado = (Aluno)modeloTabela.getValueAt(linhaSelecionada, 0); // A coluna 0 contém o objeto Veiculo
+            return alSelecionado;
+        } else {
+            JOptionPane.showMessageDialog(this, "Nenhuma linha selecionada.");
+            return null;
+        }
     }
 }
+
