@@ -5,6 +5,12 @@
 package lpoo.sistemaautescola.gui;
 
 import classes.Aluno;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import lpoo.sistemaautoescola.dao.PersistenciaJPA;
 
 /**
  *
@@ -12,20 +18,21 @@ import classes.Aluno;
  */
 public class AlunoJDialog extends javax.swing.JDialog {
     private Aluno aluno;
+    PersistenciaJPA jpa;
     
     public Aluno getAluno() {
-        return this.aluno;
+        return aluno;
     }
-
-//    public void setAluno(Aluno aluno) {
-//        this.aluno = aluno;
-//        txtNome.setText(aluno.getNome());
-//        txtCPF.setText(aluno.getCpf());
-//        txtTelefone.setText(aluno.getTelefone());
-//        txtDataNasc.setText(aluno.getData_de_nasc());
-//        txtRenach.setText(aluno.getRenach());
-//        txtMatricula.setText(aluno.getMatricula());
-//    }
+    
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
+        txtNome.setText(aluno.getNome());
+        txtCPF.setText(aluno.getCpf());
+        txtTelefone.setText(aluno.getTelefone());
+        txtDataNasc.setText(aluno.getData_de_nasc().toString());
+        txtRenach.setText(aluno.getRenach());
+        txtMatricula.setText(aluno.getMatricula());
+    }
     
     
     /**
@@ -34,6 +41,7 @@ public class AlunoJDialog extends javax.swing.JDialog {
     public AlunoJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        jpa = new PersistenciaJPA();
     }
 
     /**
@@ -45,21 +53,160 @@ public class AlunoJDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTitulo = new javax.swing.JLabel();
+        lblNome = new javax.swing.JLabel();
+        lblCPF = new javax.swing.JLabel();
+        lblTelefone = new javax.swing.JLabel();
+        lblDataNasc = new javax.swing.JLabel();
+        lblRenach = new javax.swing.JLabel();
+        lblMatricula = new javax.swing.JLabel();
+        txtNome = new javax.swing.JTextField();
+        txtCPF = new javax.swing.JTextField();
+        txtTelefone = new javax.swing.JTextField();
+        txtDataNasc = new javax.swing.JTextField();
+        txtRenach = new javax.swing.JTextField();
+        txtMatricula = new javax.swing.JTextField();
+        btnSalvar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        lblTitulo.setText("Cadastro de Novo Aluno");
+
+        lblNome.setText("Nome:");
+
+        lblCPF.setText("CPF:");
+
+        lblTelefone.setText("Telefone:");
+
+        lblDataNasc.setText("Data de Nascimento:");
+
+        lblRenach.setText("Renach:");
+
+        lblMatricula.setText("Matrícula:");
+
+        txtDataNasc.setInheritsPopupMenu(true);
+        txtDataNasc.setName(""); // NOI18N
+
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 230, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTelefone)
+                            .addComponent(lblCPF)
+                            .addComponent(lblRenach)
+                            .addComponent(lblNome)
+                            .addComponent(lblMatricula))
+                        .addGap(7, 7, 7)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtCPF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtTelefone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(11, 11, 11)
+                                .addComponent(lblDataNasc)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtRenach, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblTitulo))
+                .addContainerGap(9, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSalvar)
+                .addGap(54, 54, 54)
+                .addComponent(btnCancelar)
+                .addGap(88, 88, 88))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNome)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDataNasc)
+                    .addComponent(txtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCPF)
+                    .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTelefone)
+                    .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRenach)
+                    .addComponent(txtRenach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMatricula))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvar)
+                    .addComponent(btnCancelar))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+                if(aluno == null){
+            aluno = new Aluno();
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date data = new Date();
+        try {
+            data = formatter.parse(txtDataNasc.getText());
+        } catch (ParseException ex) {
+            Logger.getLogger(AlunoJDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        aluno.setNome(txtNome.getText());
+        aluno.setCpf(txtCPF.getText());
+        aluno.setData_de_nasc(data);
+        aluno.setRenach(txtRenach.getText());
+        aluno.setMatricula(txtMatricula.getText());
+        aluno.setTelefone(txtTelefone.getText());
+        System.out.println(aluno);
+        jpa.conexaoAberta();
+        try{
+            jpa.persist(aluno);
+        }catch(Exception ex){
+            Logger.getLogger(AlunoFrame.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Erro ao persistir Aluno: "+aluno+" \n Erro: "+ex);
+        }
+        jpa.fecharConexao();
+        dispose();
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -105,5 +252,20 @@ public class AlunoJDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JLabel lblCPF;
+    private javax.swing.JLabel lblDataNasc;
+    private javax.swing.JLabel lblMatricula;
+    private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblRenach;
+    private javax.swing.JLabel lblTelefone;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JTextField txtCPF;
+    private javax.swing.JTextField txtDataNasc;
+    private javax.swing.JTextField txtMatricula;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtRenach;
+    private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 }

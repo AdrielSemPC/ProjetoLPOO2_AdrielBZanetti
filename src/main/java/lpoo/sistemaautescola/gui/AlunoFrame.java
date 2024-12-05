@@ -148,6 +148,11 @@ public class AlunoFrame extends javax.swing.JFrame {
 
         lblMatricula.setText("Matrícula:");
 
+        txtMatricula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMatriculaActionPerformed(evt);
+            }
+        });
         txtMatricula.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtMatriculaKeyReleased(evt);
@@ -249,6 +254,10 @@ public class AlunoFrame extends javax.swing.JFrame {
 //            carregaAlunos();
 //        }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void txtMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatriculaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMatriculaActionPerformed
 
     /**
      * @param args the command line arguments
