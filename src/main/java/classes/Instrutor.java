@@ -6,6 +6,7 @@ package classes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.*;
 
 /**
@@ -46,5 +47,27 @@ public class Instrutor extends Pessoa{
 
     public void setCurso(List<Curso> curso) {
         this.curso = curso;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + Objects.hashCode(this.cnh);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Instrutor other = (Instrutor) obj;
+        return Objects.equals(this.cnh, other.cnh);
     }
 }

@@ -4,17 +4,28 @@
  */
 package lpoo.sistemaautescola.gui;
 
+import classes.Administrativo;
+import classes.Curso;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import lpoo.sistemaautoescola.dao.PersistenciaJPA;
+
 /**
  *
  * @author adrie
  */
 public class FuncionarioFrame extends javax.swing.JFrame {
-
+    PersistenciaJPA jpa;
     /**
      * Creates new form FuncionarioFrame
      */
     public FuncionarioFrame() {
         initComponents();
+        jpa = new PersistenciaJPA();
+        carregaAdministrativos();
     }
 
     /**
@@ -67,7 +78,7 @@ public class FuncionarioFrame extends javax.swing.JFrame {
         pnlTabela.setLayout(pnlTabelaLayout);
         pnlTabelaLayout.setHorizontalGroup(
             pnlTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlPessoas, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+            .addComponent(pnlPessoas)
         );
         pnlTabelaLayout.setVerticalGroup(
             pnlTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -75,22 +86,37 @@ public class FuncionarioFrame extends javax.swing.JFrame {
         );
 
         btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBotoesLayout = new javax.swing.GroupLayout(pnlBotoes);
         pnlBotoes.setLayout(pnlBotoesLayout);
         pnlBotoesLayout.setHorizontalGroup(
             pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBotoesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(147, 147, 147)
                 .addComponent(btnNovo)
                 .addGap(18, 18, 18)
                 .addComponent(btnEditar)
                 .addGap(18, 18, 18)
-                .addComponent(btnRemover)
+                .addComponent(btnRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                 .addGap(87, 87, 87))
         );
         pnlBotoesLayout.setVerticalGroup(
@@ -100,8 +126,8 @@ public class FuncionarioFrame extends javax.swing.JFrame {
                 .addGroup(pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovo)
                     .addComponent(btnEditar)
-                    .addComponent(btnRemover))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(btnRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -111,6 +137,11 @@ public class FuncionarioFrame extends javax.swing.JFrame {
 
         lblCPF.setText("CPF:");
 
+        txtNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeActionPerformed(evt);
+            }
+        });
         txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNomeKeyPressed(evt);
@@ -140,7 +171,7 @@ public class FuncionarioFrame extends javax.swing.JFrame {
                             .addComponent(lblNome)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(293, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlCabecalhoLayout.setVerticalGroup(
             pnlCabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,12 +214,67 @@ public class FuncionarioFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
-        pesquisaNome(txtNome.getText());        // TODO add your handling code here:
+        pesquisaPessoas(txtNome.getText(), 0);
     }//GEN-LAST:event_txtNomeKeyPressed
 
     private void txtCPFKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCPFKeyReleased
-        pesquisaCPF(txtCPF.getText());        // TODO add your handling code here:
+        pesquisaPessoas(txtCPF.getText(), 1);        // TODO add your handling code here:
     }//GEN-LAST:event_txtCPFKeyReleased
+
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+    }//GEN-LAST:event_txtNomeActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        FuncionarioJDialog tela = new FuncionarioJDialog(this, rootPaneCheckingEnabled);
+        tela.setVisible(true);
+        carregaAdministrativos();
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        Administrativo admSel = getAdministrativoSelecionado();
+        if (admSel != null) {
+            FuncionarioJDialog tela = new FuncionarioJDialog(this, rootPaneCheckingEnabled);
+            tela.setAdministrativo(admSel);
+            tela.setVisible(true);
+            carregaAdministrativos();
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        Administrativo admSel = getAdministrativoSelecionado();
+        if (admSel != null) {
+            int delOp = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja remover administrativo " + admSel + "?");
+            if (delOp == JOptionPane.YES_OPTION) {
+                List<Curso> aux = admSel.getCurso();
+                if(admSel.getCurso()!=null){
+                    admSel.setCurso(null);
+                    for(Curso c : aux){
+                        c.setAdministrativo(null);
+                        try{
+                            jpa.persist(c);
+                        }catch (Exception ex) {
+                            Logger.getLogger(AlunoFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    try {
+                        jpa.persist(admSel);
+                    } catch (Exception ex) {
+                        Logger.getLogger(AlunoFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                jpa.conexaoAberta();
+                try {
+                    jpa.remover(admSel);
+                    JOptionPane.showMessageDialog(rootPane, "Veículo removido com sucesso!");
+                    carregaAdministrativos();
+                } catch (Exception e) {
+                    System.err.println("Erro ao remover veículo " + admSel + "\nErro: " + e.getMessage());
+                } finally {
+                    jpa.fecharConexao();
+                }
+            }
+        }
+    }//GEN-LAST:event_btnRemoverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,11 +327,45 @@ public class FuncionarioFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
 
-    private void pesquisaNome(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private void pesquisaPessoas(String arg, int tipo) {
+        List<Administrativo> listaAdministrativos = jpa.getAdministrativos(arg, tipo);
+        DefaultTableModel modeloTabela = (DefaultTableModel) tblPessoas.getModel();
+        modeloTabela.setRowCount(0);
+        for (Administrativo adm : listaAdministrativos) {
+                Object[] linha = {
+                    adm,
+                    adm.getCpf(),
+                    adm.getCargo(),
+                    adm.getTelefone()
+                };
+            modeloTabela.addRow(linha);
+        }
+    }
+    
+    private void carregaAdministrativos(){
+        List<Administrativo> listaAdministrativos = jpa.getAdministrativos();
+        DefaultTableModel modeloTabela = (DefaultTableModel) tblPessoas.getModel();
+        modeloTabela.setRowCount(0);
+        for (Administrativo adm : listaAdministrativos) {
+                Object[] linha = {
+                    adm,
+                    adm.getCpf(),
+                    adm.getCargo(),
+                    adm.getTelefone()
+                };
+            modeloTabela.addRow(linha);
+        }
     }
 
-    private void pesquisaCPF(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private Administrativo getAdministrativoSelecionado() {
+        int linhaSelecionada = tblPessoas.getSelectedRow(); // Obtém a linha selecionada
+        if (linhaSelecionada >= 0) { // Quando não tem nenhum objeto selecionado retorna -1
+            DefaultTableModel modeloTabela = (DefaultTableModel) tblPessoas.getModel();
+            Administrativo admSelecionado = (Administrativo)modeloTabela.getValueAt(linhaSelecionada, 0); // A coluna 0 contém o objeto Veiculo
+            return admSelecionado;
+        } else {
+            JOptionPane.showMessageDialog(this, "Nenhuma linha selecionada.");
+            return null;
+        }
     }
 }

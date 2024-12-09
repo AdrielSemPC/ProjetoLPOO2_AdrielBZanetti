@@ -4,19 +4,29 @@
  */
 package lpoo.sistemaautescola.gui;
 
+import classes.Curso;
 import classes.Instrutor;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import lpoo.sistemaautoescola.dao.PersistenciaJPA;
 
 /**
  *
  * @author adrie
  */
 public class InstrutorFrame extends javax.swing.JFrame {
-
+    private Instrutor instrutor;
+    PersistenciaJPA jpa;
     /**
      * Creates new form InstrutorFrame
      */
     public InstrutorFrame() {
         initComponents();
+        jpa = new PersistenciaJPA();
+        carregaInstrutores();
     }
 
     /**
@@ -136,8 +146,18 @@ public class InstrutorFrame extends javax.swing.JFrame {
         });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBotoesLayout = new javax.swing.GroupLayout(pnlBotoes);
         pnlBotoes.setLayout(pnlBotoesLayout);
@@ -189,16 +209,65 @@ public class InstrutorFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-
+        InstrutorJDialog tela = new InstrutorJDialog(this, rootPaneCheckingEnabled);
+        tela.setVisible(true);
+        carregaInstrutores();        
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void txtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyReleased
-        pesquisaNome(txtNome.getText());
+        pesquisaPessoas(txtNome.getText(), 0);
     }//GEN-LAST:event_txtNomeKeyReleased
 
     private void txtCPFKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCPFKeyReleased
-        pesquisaCPF(txtCPF.getText());        // TODO add your handling code here:
+        pesquisaPessoas(txtCPF.getText(), 1);        // TODO add your handling code here:
     }//GEN-LAST:event_txtCPFKeyReleased
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        Instrutor iSel = getInstrutorSelecionado();
+        if (iSel != null) {
+            int delOp = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja remover instrutor " + iSel + "?");
+            if (delOp == JOptionPane.YES_OPTION) {
+                jpa.conexaoAberta();
+                List<Curso> aux = iSel.getCurso();
+                if(iSel.getCurso()!=null){
+                    iSel.setCurso(null);
+                    for(Curso c : aux){
+                        c.setInstrutor(null);
+                        try{
+                            jpa.persist(c);
+                        }catch (Exception ex) {
+                            Logger.getLogger(AlunoFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    try {
+                        jpa.persist(iSel);
+                    } catch (Exception ex) {
+                        Logger.getLogger(AlunoFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                try {
+                    jpa.remover(iSel);
+                    JOptionPane.showMessageDialog(rootPane, "Veículo removido com sucesso!");
+                    carregaInstrutores();
+                } catch (Exception e) {
+                    System.err.println("Erro ao remover veículo " + iSel + "\nErro: " + e.getMessage());
+                } finally {
+                    jpa.fecharConexao();
+                }
+
+            }
+        }
+    }//GEN-LAST:event_btnRemoverActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        Instrutor iSel = getInstrutorSelecionado();
+        if (iSel != null) {
+            InstrutorJDialog tela = new InstrutorJDialog(this, rootPaneCheckingEnabled);
+            tela.setInstrutor(iSel);
+            tela.setVisible(true);
+            carregaInstrutores();
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -251,11 +320,45 @@ public class InstrutorFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
 
-    private void pesquisaNome(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private void pesquisaPessoas(String arg, int tipo) {
+        List<Instrutor> listaInstrutores = jpa.getInstrutores(arg, tipo);
+        DefaultTableModel modeloTabela = (DefaultTableModel) tblPessoas.getModel();
+        modeloTabela.setRowCount(0);
+        for (Instrutor i : listaInstrutores) {
+                Object[] linha = {
+                    i,
+                    i.getCpf(),
+                    i.getCnh(),
+                    i.getTelefone()
+                };
+            modeloTabela.addRow(linha);
+        }
+    }
+    
+    private void carregaInstrutores(){
+        List<Instrutor> listaInstrutores = jpa.getInstrutores();
+        DefaultTableModel modeloTabela = (DefaultTableModel) tblPessoas.getModel();
+        modeloTabela.setRowCount(0);
+        for (Instrutor i : listaInstrutores) {
+                Object[] linha = {
+                    i,
+                    i.getCpf(),
+                    i.getCnh(),
+                    i.getTelefone()
+                };
+            modeloTabela.addRow(linha);
+        }
     }
 
-    private void pesquisaCPF(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private Instrutor getInstrutorSelecionado() {
+        int linhaSelecionada = tblPessoas.getSelectedRow(); // Obtém a linha selecionada
+        if (linhaSelecionada >= 0) { // Quando não tem nenhum objeto selecionado retorna -1
+            DefaultTableModel modeloTabela = (DefaultTableModel) tblPessoas.getModel();
+            Instrutor admSelecionado = (Instrutor)modeloTabela.getValueAt(linhaSelecionada, 0); // A coluna 0 contém o objeto Veiculo
+            return admSelecionado;
+        } else {
+            JOptionPane.showMessageDialog(this, "Nenhuma linha selecionada.");
+            return null;
+        }
     }
 }

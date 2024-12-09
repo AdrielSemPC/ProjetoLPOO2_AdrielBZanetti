@@ -20,6 +20,22 @@ import lpoo.sistemaautoescola.dao.PersistenciaJPA;
 public class FuncionarioJDialog extends javax.swing.JDialog {
     private Administrativo administrativo;
     PersistenciaJPA jpa;
+    
+    public void setAdministrativo(Administrativo administrativo){
+        this.administrativo = administrativo;
+        txtNome.setText(administrativo.getNome());
+        txtCPF.setText(administrativo.getCpf());
+        txtTelefone.setText(administrativo.getTelefone());
+        SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+        txtDataNasc.setText(f.format(administrativo.getData_de_nasc()));
+        cmbCargo.setSelectedItem(administrativo.getCargo());
+    }
+    
+    public Administrativo getAdministrativo(){
+        return this.administrativo;
+    }
+    
+    
     /**
      * Creates new form PessoaFrame
      */
@@ -83,12 +99,6 @@ public class FuncionarioJDialog extends javax.swing.JDialog {
         lblNome.setText("Nome:");
 
         lblCPF.setText("CPF:");
-
-        cmbCargo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbCargoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -168,11 +178,11 @@ public class FuncionarioJDialog extends javax.swing.JDialog {
         } catch (ParseException ex) {
             Logger.getLogger(Administrativo.class.getName()).log(Level.SEVERE, null, ex);
         }
-       administrativo.setNome(txtNome.getText());
-       administrativo.setCpf(txtCPF.getText());
-       administrativo.setData_de_nasc(data);
-       administrativo.setCargo((Cargo)cmbCargo.getSelectedItem());
-       administrativo.setTelefone(txtTelefone.getText());
+        administrativo.setNome(txtNome.getText());
+        administrativo.setCpf(txtCPF.getText());
+        administrativo.setData_de_nasc(data);
+        administrativo.setCargo((Cargo)cmbCargo.getSelectedItem());
+        administrativo.setTelefone(txtTelefone.getText());
         System.out.println(administrativo);
         jpa.conexaoAberta();
         try{
@@ -188,10 +198,6 @@ public class FuncionarioJDialog extends javax.swing.JDialog {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void cmbCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCargoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbCargoActionPerformed
 
     /**
      * @param args the command line arguments

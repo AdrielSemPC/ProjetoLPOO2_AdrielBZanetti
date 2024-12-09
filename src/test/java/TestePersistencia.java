@@ -50,10 +50,18 @@ public class TestePersistencia {
         Aluno al = new Aluno();
         Curso c = new Curso(); //quase
         Instrutor i = new Instrutor();
+        List<Aula> a = new ArrayList<>();
         
         Calendar calendar = Calendar.getInstance();
         calendar.set(1999, Calendar.JANUARY, 1);
         Date data = calendar.getTime();
+        
+        Aula aula1 = new Aula();
+        aula1.setConcluida(true);
+        aula1.setDia_aula(data);
+        
+        calendar.set(1999, Calendar.JANUARY, 1);
+        data = calendar.getTime();
         
         adm.setNome("Carla");
         adm.setCpf("12345678910");
@@ -62,7 +70,7 @@ public class TestePersistencia {
         adm.setCargo(Cargo.RECEPCIONISTA);
 //        adm.addCurso(c);
 
-jpa.persist(adm);
+        jpa.persist(adm);
         
         
         
@@ -77,7 +85,7 @@ jpa.persist(adm);
 //        i.addCurso(c);
 
 
-            jpa.persist(i);
+        jpa.persist(i);
         
         calendar.set(2006, Calendar.MAY, 6);
         data = calendar.getTime();
@@ -90,7 +98,7 @@ jpa.persist(adm);
         al.setTelefone("56978945632");
 //        al.addCurso(c);
 
-            jpa.persist(al);
+        jpa.persist(al);
         
 //        System.out.println(al.getCurso());
         
@@ -105,14 +113,16 @@ jpa.persist(adm);
         c.setAluno(alx);
         c.setAdministrativo(admx);
         c.setInstrutor(ix);
+        c.setAulas(a);
+        c.addAula(aula1);
+        c.addAula(aula1);
+        c.addAula(aula1);
+        c.setFinalizado(false);
+        
         
 //        al.setCurso(c);
 //        ha.setCurso(c);
         
-        
-            
-            
-            
             jpa.persist(c);
         } catch (Exception ex) {
             Logger.getLogger(TestePersistencia.class.getName()).log(Level.SEVERE, null, ex);

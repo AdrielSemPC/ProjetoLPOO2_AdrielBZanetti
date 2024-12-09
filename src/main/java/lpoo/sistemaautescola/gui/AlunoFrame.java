@@ -5,7 +5,10 @@
 package lpoo.sistemaautescola.gui;
 
 import classes.Aluno;
+import classes.Curso;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import lpoo.sistemaautoescola.dao.PersistenciaJPA;
@@ -102,6 +105,11 @@ public class AlunoFrame extends javax.swing.JFrame {
         });
 
         btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBotoesLayout = new javax.swing.GroupLayout(pnlBotoes);
         pnlBotoes.setLayout(pnlBotoesLayout);
@@ -246,18 +254,55 @@ public class AlunoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-//        Aluno alSel = getAlunoSelecionado();
-//        if (alSel != null) {
-//            AlunoJDialog tela = new AlunoJDialog(this, rootPaneCheckingEnabled);
-//            tela.setAluno(alSel);
-//            tela.setVisible(true);
-//            carregaAlunos();
-//        }
+        Aluno alSel = getAlunoSelecionado();
+        if (alSel != null) {
+            AlunoJDialog tela = new AlunoJDialog(this, rootPaneCheckingEnabled);
+            tela.setAluno(alSel);
+            tela.setVisible(true);
+            carregaAlunos();
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void txtMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatriculaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMatriculaActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        Aluno alSel = getAlunoSelecionado();
+        if (alSel != null) {
+            int delOp = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja remover aluno " + alSel + "?");
+            if (delOp == JOptionPane.YES_OPTION) {
+                List<Curso> aux = alSel.getCurso();
+                if(alSel.getCurso()!=null){
+                    alSel.setCurso(null);
+                    for(Curso c : aux){
+                        c.setAluno(null);
+                        try{
+                            jpa.persist(c);
+                        }catch (Exception ex) {
+                            Logger.getLogger(AlunoFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    try {
+                        jpa.persist(alSel);
+                    } catch (Exception ex) {
+                        Logger.getLogger(AlunoFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                jpa.conexaoAberta();
+                try {
+                    jpa.remover(alSel);
+                    JOptionPane.showMessageDialog(rootPane, "Aluno removido com sucesso!");
+                    carregaAlunos();
+                } catch (Exception e) {
+                    System.err.println("Erro ao remover aluno " + alSel + "\nErro: " + e.getMessage());
+                } finally {
+                    jpa.fecharConexao();
+                }
+
+            }
+        }
+    }//GEN-LAST:event_btnRemoverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -320,7 +365,7 @@ public class AlunoFrame extends javax.swing.JFrame {
         modeloTabela.setRowCount(0);
         for (Aluno a : listaAlunos) {
                 Object[] linha = {
-                    a.getNome(),
+                    a,
                     a.getCpf(),
                     a.getMatricula(),
                     a.getRenach(),
@@ -336,7 +381,7 @@ public class AlunoFrame extends javax.swing.JFrame {
         modeloTabela.setRowCount(0);
         for (Aluno a : listaAlunos) {
                 Object[] linha = {
-                    a.getNome(),
+                    a,
                     a.getCpf(),
                     a.getMatricula(),
                     a.getRenach(),
@@ -349,13 +394,17 @@ public class AlunoFrame extends javax.swing.JFrame {
     private Aluno getAlunoSelecionado() {
         int linhaSelecionada = tblPessoas.getSelectedRow(); // Obtém a linha selecionada
         if (linhaSelecionada >= 0) { // Quando não tem nenhum objeto selecionado retorna -1
-            DefaultTableModel modeloTabela = (DefaultTableModel) tblPessoas.getModel();
-            Aluno alSelecionado = (Aluno)modeloTabela.getValueAt(linhaSelecionada, 0); // A coluna 0 contém o objeto Veiculo
-            return alSelecionado;
+            try{
+                DefaultTableModel modeloTabela = (DefaultTableModel) tblPessoas.getModel();
+                Aluno alSelecionado = (Aluno) modeloTabela.getValueAt(linhaSelecionada, 0); // A coluna 0 contém o objeto Veiculo
+                return alSelecionado;
+            }catch(Exception e){
+                System.out.println("Erro encontrado: "+e);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Nenhuma linha selecionada.");
-            return null;
         }
+        return null;
     }
 }
 

@@ -4,18 +4,42 @@
  */
 package lpoo.sistemaautescola.gui;
 
+import classes.Instrutor;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import lpoo.sistemaautoescola.dao.PersistenciaJPA;
+
 /**
  *
  * @author adrie
  */
 public class InstrutorJDialog extends javax.swing.JDialog {
-
+    private Instrutor instrutor;
+    PersistenciaJPA jpa;
+    
+    public void setInstrutor(Instrutor instrutor){
+        this.instrutor = instrutor;
+        txtNome.setText(instrutor.getNome());
+        txtCPF.setText(instrutor.getCpf());
+        txtTelefone.setText(instrutor.getTelefone());
+        SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+        txtDataNasc.setText(f.format(instrutor.getData_de_nasc()));
+        txtCNH.setText(instrutor.getCnh());
+    }
+    
+    public Instrutor getInstrutor(){
+        return this.instrutor;
+    }
     /**
      * Creates new form PessoaFrame
      */
     public InstrutorJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        jpa = new PersistenciaJPA();
     }
 
     /**
@@ -140,32 +164,30 @@ public class InstrutorJDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-//        if(aluno == null){
-//            aluno = new Aluno();
-//        }
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-//        Date data = new Date();
-//        try {
-//            data = formatter.parse(txtDataNasc.getText());
-//        } catch (ParseException ex) {
-//            Logger.getLogger(AlunoJDialog.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        aluno.setNome(txtNome.getText());
-//        aluno.setCpf(txtCPF.getText());
-//        aluno.setData_de_nasc(data);
-//        aluno.setRenach(txtCNH.getText());
-//        aluno.setMatricula(txtMatricula.getText());
-//        aluno.setTelefone(txtTelefone.getText());
-//        System.out.println(aluno);
-//        jpa.conexaoAberta();
-//        try{
-//            jpa.persist(aluno);
-//        }catch(Exception ex){
-//            Logger.getLogger(AlunoFrame.class.getName()).log(Level.SEVERE, null, ex);
-//            System.out.println("Erro ao persistir Aluno: "+aluno+" \n Erro: "+ex);
-//        }
-//        jpa.fecharConexao();
-//        dispose();
+        if(instrutor == null){
+            instrutor = new Instrutor();
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date data = new Date();
+        try {
+            data = formatter.parse(txtDataNasc.getText());
+        } catch (ParseException ex) {
+            Logger.getLogger(InstrutorJDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        instrutor.setNome(txtNome.getText());
+        instrutor.setCpf(txtCPF.getText());
+        instrutor.setData_de_nasc(data);
+        instrutor.setTelefone(txtTelefone.getText());
+        instrutor.setCnh(txtCNH.getText());
+        jpa.conexaoAberta();
+        try{
+            jpa.persist(instrutor);
+        }catch(Exception ex){
+            Logger.getLogger(InstrutorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Erro ao persistir Instrutor: "+instrutor+" \n Erro: "+ex);
+        }
+        jpa.fecharConexao();
+        dispose();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

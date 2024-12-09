@@ -29,15 +29,12 @@ public class AlunoJDialog extends javax.swing.JDialog {
         txtNome.setText(aluno.getNome());
         txtCPF.setText(aluno.getCpf());
         txtTelefone.setText(aluno.getTelefone());
-        txtDataNasc.setText(aluno.getData_de_nasc().toString());
+        SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+        txtDataNasc.setText(f.format(aluno.getData_de_nasc()));
         txtRenach.setText(aluno.getRenach());
         txtMatricula.setText(aluno.getMatricula());
     }
     
-    
-    /**
-     * Creates new form PessoaFrame
-     */
     public AlunoJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -180,7 +177,7 @@ public class AlunoJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-                if(aluno == null){
+        if(aluno == null){
             aluno = new Aluno();
         }
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -196,7 +193,6 @@ public class AlunoJDialog extends javax.swing.JDialog {
         aluno.setRenach(txtRenach.getText());
         aluno.setMatricula(txtMatricula.getText());
         aluno.setTelefone(txtTelefone.getText());
-        System.out.println(aluno);
         jpa.conexaoAberta();
         try{
             jpa.persist(aluno);

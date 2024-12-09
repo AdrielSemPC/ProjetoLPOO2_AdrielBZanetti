@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import org.eclipse.persistence.annotations.CascadeOnDelete;
 
 /**
  *
@@ -33,27 +34,33 @@ public class Curso implements Serializable {
    @Temporal(javax.persistence.TemporalType.DATE)
    private Date data_inicio;
    
-   //@ManyToOne(cascade = CascadeType.ALL)
    @ManyToOne
    @JoinColumn(name = "instrutor_id")
    private Instrutor instrutor;
    
-   //@ManyToOne(cascade = CascadeType.ALL)
    @ManyToOne
    @JoinColumn(name = "aluno_id")
    private Aluno aluno;
    
-   //@ManyToOne(cascade = CascadeType.ALL)
    @ManyToOne
    @JoinColumn(name = "administrativo_id")
    private Administrativo administrativo;
    
-   @ElementCollection
-   private List<Date> aulas;
+   @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
+   private List<Aula> aulas;
+   
+   @Column(name = "finalizado")
+   private Boolean finalizado;
+   
+    public void addAula(Aula aula) {
+        aulas.add(aula);
+        aula.setCurso(this);
+    }
 
-   public Curso(){
-       this.aulas = new ArrayList<>();
-   }
+    public void removeAula(Aula aula) {
+        aulas.remove(aula);
+        aula.setCurso(null);
+    }
    
     public Categoria getCategoria() {
         return categoria;
@@ -80,12 +87,15 @@ public class Curso implements Serializable {
     }
 
     
-    public List<Date> getAulas() {
+    public List<Aula> getAulas() {
         return aulas;
     }
 
-    public void setAulas(List<Date> aulas) {
+    public void setAulas(List<Aula> aulas) {
         this.aulas = aulas;
+        for(Aula a : aulas){
+            a.setCurso(this);
+        }
     }
 
     public Instrutor getInstrutor() {
@@ -118,5 +128,39 @@ public class Curso implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Boolean getFinalizado() {
+        return finalizado;
+    }
+
+    public void setFinalizado(Boolean finalizado) {
+        this.finalizado = finalizado;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 59 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Curso other = (Curso) obj;
+        return this.id == other.id;
+    }
+    
+    public String toString(){
+        return ""+id+"";
     }
 }

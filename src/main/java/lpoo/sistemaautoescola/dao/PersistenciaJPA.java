@@ -92,8 +92,8 @@ public class PersistenciaJPA implements InterfaceBD{
             return query.getResultList();
         } catch (Exception e) {
             System.err.println("Erro ao buscar Alunos: " + e);
-            return null;
         }
+        return null;
     }
     
     public List<Aluno> getAlunos(String arg, int tipo){
@@ -106,7 +106,6 @@ public class PersistenciaJPA implements InterfaceBD{
                     return query.getResultList();
                 } catch (Exception e) {
                     System.err.println("Erro ao buscar Alunos: " + e);
-                    return null;
                 }
             }
             case 1 -> {
@@ -116,7 +115,6 @@ public class PersistenciaJPA implements InterfaceBD{
                     return query.getResultList();
                 } catch (Exception e) {
                     System.err.println("Erro ao buscar Alunos: " + e);
-                    return null;
                 }
             }
             case 2 -> {
@@ -126,34 +124,106 @@ public class PersistenciaJPA implements InterfaceBD{
                     return query.getResultList();
                 } catch (Exception e) {
                     System.err.println("Erro ao buscar Alunos: " + e);
-                    return null;
                 }
-            }
-            default -> {
             }
         }
         return null;
     }
     
-    public List<Administrativo> getAdministrativo(){
+    public List<Administrativo> getAdministrativos(String arg, int tipo){
+        entity = getEntityManager();
+        switch (tipo) {
+            case 0 -> {
+                try {
+                    TypedQuery<Administrativo> query = entity.createQuery("Select adm from Administrativo adm where lower(adm.nome) LIKE :x", Administrativo.class);
+                    query.setParameter("x", "%" + arg.toLowerCase() + "%");
+                    return query.getResultList();
+                } catch (Exception e) {
+                    System.err.println("Erro ao buscar Administrativos: " + e);
+                }
+            }
+            case 1 -> {
+                try {
+                    TypedQuery<Administrativo> query = entity.createQuery("Select adm from Administrativo adm where lower(adm.cpf) LIKE :x",  Administrativo.class);
+                    query.setParameter("x", "%" + arg.toLowerCase() + "%");
+                    return query.getResultList();
+                } catch (Exception e) {
+                    System.err.println("Erro ao buscar Administrativos: " + e);
+                }
+            }
+        }
+        return null;
+    }
+    
+    public List<Administrativo> getAdministrativos(){
         entity = getEntityManager();
         try {
             TypedQuery<Administrativo> query = entity.createQuery("Select a from Administrativo a", Administrativo.class);
             return query.getResultList();
         } catch (Exception e) {
             System.err.println("Erro ao buscar Funcionários: " + e);
-            return null;
         }
+        return null;
     }
         
-    public List<Instrutor> getInstrutor(){
+    public List<Instrutor> getInstrutores(){
         entity = getEntityManager();
         try {
             TypedQuery<Instrutor> query = entity.createQuery("Select i from Instrutor i", Instrutor.class);
             return query.getResultList();
         } catch (Exception e) {
             System.err.println("Erro ao buscar Instrutores: " + e);
-            return null;
         }
+        return null;
+    }
+    
+    
+    
+    public List<Instrutor> getInstrutores(String arg, int tipo){
+        entity = getEntityManager();
+        switch (tipo) {
+            case 0 -> {
+                try {
+                    TypedQuery<Instrutor> query = entity.createQuery("Select i from Instrutor i where lower(i.nome) LIKE :x", Instrutor.class);
+                    query.setParameter("x", "%" + arg.toLowerCase() + "%");
+                    return query.getResultList();
+                } catch (Exception e) {
+                    System.err.println("Erro ao buscar Instrutores: " + e);
+                }
+            }
+            case 1 -> {
+                try {
+                    TypedQuery<Instrutor> query = entity.createQuery("Select i from Instrutor i where lower(i.cpf) LIKE :x", Instrutor.class);
+                    query.setParameter("x", "%" + arg.toLowerCase() + "%");
+                    return query.getResultList();
+                } catch (Exception e) {
+                    System.err.println("Erro ao buscar Administrativos: " + e);
+                }
+            }
+        }
+        return null;
+    }
+    
+    public List<Curso> getCursos(){
+        entity = getEntityManager();
+        try {
+            TypedQuery<Curso> query = entity.createQuery("Select c from Curso c", Curso.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            System.err.println("Erro ao buscar Cursos: " + e);
+        }
+        return null;
+    }
+    
+    public List<Aula> getAulas(int id){
+        entity = getEntityManager();
+        try {
+            TypedQuery<Aula> query = entity.createQuery("Select a from Aula a where a.curso.id =:aux", Aula.class);
+            query.setParameter("aux",id);
+            return query.getResultList();
+        } catch (Exception e) {
+            System.err.println("Erro ao buscar Aulas: " + e);
+        }
+        return null;
     }
 }
