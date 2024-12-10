@@ -50,7 +50,6 @@ public class TestePersistencia {
         Aluno al = new Aluno();
         Curso c = new Curso(); //quase
         Instrutor i = new Instrutor();
-        List<Aula> a = new ArrayList<>();
         
         Calendar calendar = Calendar.getInstance();
         calendar.set(1999, Calendar.JANUARY, 1);
@@ -113,10 +112,10 @@ public class TestePersistencia {
         c.setAluno(alx);
         c.setAdministrativo(admx);
         c.setInstrutor(ix);
-        c.setAulas(a);
+        //c.setAulas(a);
         c.addAula(aula1);
-        c.addAula(aula1);
-        c.addAula(aula1);
+//        c.addAula(aula1);
+//        c.addAula(aula1);
         c.setFinalizado(false);
         
         

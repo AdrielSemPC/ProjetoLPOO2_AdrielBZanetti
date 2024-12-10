@@ -1,12 +1,16 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package lpoo.sistemaautescola.gui;
 
+import classes.Administrativo;
 import classes.Aula;
 import classes.Curso;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import lpoo.sistemaautoescola.dao.PersistenciaJPA;
 
@@ -14,7 +18,7 @@ import lpoo.sistemaautoescola.dao.PersistenciaJPA;
  *
  * @author adrie
  */
-public class VisualizarJDialog extends javax.swing.JDialog {
+public class VisualizarFrame extends javax.swing.JFrame {
     private Curso curso;
     PersistenciaJPA jpa;
     
@@ -25,88 +29,87 @@ public class VisualizarJDialog extends javax.swing.JDialog {
     public void setCurso(Curso c){
         this.curso = c;
         String aux;
-        if(curso.getAluno()!=null){
-            aux = curso.getAluno().getNome();
-            txtNomeAluno.setText(aux);
-            aux = curso.getAluno().getCpf();
-            txtCPFAluno.setText(aux);
-            aux = curso.getData_inicio().toString();
-            txtNascAluno.setText(aux);
-            aux = curso.getAluno().getMatricula();
-            txtMatriculaAluno.setText(aux);
-            aux = curso.getAluno().getTelefone();
-            txtTelefoneAluno.setText(aux);
-            aux = curso.getAluno().getRenach();
-            txtRenachAluno.setText(aux);
-        }else{
-            aux = null;
-            txtNomeAluno.setText(aux);
-            txtCPFAluno.setText(aux);
-            txtNascAluno.setText(aux);
-            txtMatriculaAluno.setText(aux);
-            txtTelefoneAluno.setText(aux);
-            txtRenachAluno.setText(aux);
-        }
-        if(curso.getInstrutor()!=null){
-            aux = curso.getInstrutor().getNome();
-            txtNomeInstrutor.setText(aux);
-            aux = curso.getInstrutor().getCpf();
-            txtCPFInstrutor.setText(aux);
-            aux = curso.getInstrutor().getCnh();
-            txtCNHInstrutor.setText(aux);
-            aux = curso.getInstrutor().getData_de_nasc().toString();
-            txtDataNascInstrutor.setText(aux);
-            aux = curso.getInstrutor().getTelefone();
-            txtTelefoneInstrutor.setText(aux);
-        }else{
-            aux = null;
-            txtNomeInstrutor.setText(aux);
-            txtCPFInstrutor.setText(aux);
-            txtCNHInstrutor.setText(aux);
-            txtDataNascInstrutor.setText(aux);
-            txtTelefoneInstrutor.setText(aux);
-        }
-        if(curso.getAdministrativo()!=null){
-            aux = curso.getInstrutor().getNome();
-            txtNomeInstrutor.setText(aux);
-            aux = curso.getInstrutor().getCpf();
-            txtCPFInstrutor.setText(aux);
-            aux = curso.getInstrutor().getCnh();
-            txtCNHInstrutor.setText(aux);
-            aux = curso.getInstrutor().getData_de_nasc().toString();
-            txtDataNascInstrutor.setText(aux);
-            aux = curso.getInstrutor().getTelefone();
-            txtTelefoneInstrutor.setText(aux);
-            aux = curso.getAdministrativo().getNome();
-            txtNomeAdm.setText(aux);
-            aux = curso.getAdministrativo().getCargo().toString();
-            txtCargoAdm.setText(aux);
+        if (curso != null) {
+            if (curso.getAluno() != null) {
+                aux = curso.getAluno().getNome();
+                txtNomeAluno.setText(aux);
+                aux = curso.getAluno().getCpf();
+                txtCPFAluno.setText(aux);
+                aux = curso.getData_inicio().toString();
+                txtNascAluno.setText(aux);
+                aux = curso.getAluno().getMatricula();
+                txtMatriculaAluno.setText(aux);
+                aux = curso.getAluno().getTelefone();
+                txtTelefoneAluno.setText(aux);
+                aux = curso.getAluno().getRenach();
+                txtRenachAluno.setText(aux);
+            } else {
+                aux = null;
+                txtNomeAluno.setText(aux);
+                txtCPFAluno.setText(aux);
+                txtNascAluno.setText(aux);
+                txtMatriculaAluno.setText(aux);
+                txtTelefoneAluno.setText(aux);
+                txtRenachAluno.setText(aux);
+            }
+            if (curso.getInstrutor() != null) {
+                aux = curso.getInstrutor().getNome();
+                txtNomeInstrutor.setText(aux);
+                aux = curso.getInstrutor().getCpf();
+                txtCPFInstrutor.setText(aux);
+                aux = curso.getInstrutor().getCnh();
+                txtCNHInstrutor.setText(aux);
+                aux = curso.getInstrutor().getData_de_nasc().toString();
+                txtDataNascInstrutor.setText(aux);
+                aux = curso.getInstrutor().getTelefone();
+                txtTelefoneInstrutor.setText(aux);
+            } else {
+                aux = null;
+                txtNomeInstrutor.setText(aux);
+                txtCPFInstrutor.setText(aux);
+                txtCNHInstrutor.setText(aux);
+                txtDataNascInstrutor.setText(aux);
+                txtTelefoneInstrutor.setText(aux);
+            }
+            if (curso.getAdministrativo() != null) {
+                aux = curso.getInstrutor().getNome();
+                txtNomeInstrutor.setText(aux);
+                aux = curso.getInstrutor().getCpf();
+                txtCPFInstrutor.setText(aux);
+                aux = curso.getInstrutor().getCnh();
+                txtCNHInstrutor.setText(aux);
+                aux = curso.getInstrutor().getData_de_nasc().toString();
+                txtDataNascInstrutor.setText(aux);
+                aux = curso.getInstrutor().getTelefone();
+                txtTelefoneInstrutor.setText(aux);
+                aux = curso.getAdministrativo().getNome();
+                txtNomeAdm.setText(aux);
+                aux = curso.getAdministrativo().getCargo().toString();
+                txtCargoAdm.setText(aux);
+                aux = curso.getData_inicio().toString();
+                txtDataInicio.setText(aux);
+            } else {
+                aux = null;
+                txtNomeInstrutor.setText(aux);
+                txtCPFInstrutor.setText(aux);
+                txtCNHInstrutor.setText(aux);
+                txtDataNascInstrutor.setText(aux);
+                txtTelefoneInstrutor.setText(aux);
+                txtNomeAdm.setText(aux);
+                txtCargoAdm.setText(aux);
+            }
             aux = curso.getData_inicio().toString();
             txtDataInicio.setText(aux);
         }else{
             aux = null;
-            txtNomeInstrutor.setText(aux);
-            txtCPFInstrutor.setText(aux);
-            txtCNHInstrutor.setText(aux);
-            txtDataNascInstrutor.setText(aux);
-            txtTelefoneInstrutor.setText(aux);
-            txtNomeAdm.setText(aux);
-            txtCargoAdm.setText(aux);
-        }
-        if(curso != null){
-            aux = curso.getData_inicio().toString();
-            txtDataInicio.setText(aux);
-            carregaAulas(curso);
-        }else{
-            aux = null;
             txtDataInicio.setText(aux);
         }
+        carregaAulas(curso);
     }
     /**
-     * Creates new form VisualizarJDialog
+     * Creates new form VisualizarFrame
      */
-    public VisualizarJDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public VisualizarFrame() {
         initComponents();
         jpa = new PersistenciaJPA();
     }
@@ -125,6 +128,7 @@ public class VisualizarJDialog extends javax.swing.JDialog {
             modeloTabela.addRow(linha);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -134,6 +138,18 @@ public class VisualizarJDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel3 = new javax.swing.JPanel();
+        lblAdministrativo = new javax.swing.JLabel();
+        lblNomeAdm = new javax.swing.JLabel();
+        txtNomeAdm = new javax.swing.JLabel();
+        lblCargoAdm = new javax.swing.JLabel();
+        txtCargoAdm = new javax.swing.JLabel();
+        lblDataInicio = new javax.swing.JLabel();
+        txtDataInicio = new javax.swing.JLabel();
+        btnAgenda = new javax.swing.JButton();
+        btnFechar = new javax.swing.JButton();
+        btnRemover = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         lblNomeAluno = new javax.swing.JLabel();
         lblCPFAluno = new javax.swing.JLabel();
@@ -148,17 +164,9 @@ public class VisualizarJDialog extends javax.swing.JDialog {
         txtRenachAluno = new javax.swing.JLabel();
         lblTelefoneAluno = new javax.swing.JLabel();
         txtTelefoneAluno = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        lblAdministrativo = new javax.swing.JLabel();
-        lblNomeAdm = new javax.swing.JLabel();
-        txtNomeAdm = new javax.swing.JLabel();
-        lblCargoAdm = new javax.swing.JLabel();
-        txtCargoAdm = new javax.swing.JLabel();
-        lblDataInicio = new javax.swing.JLabel();
-        txtDataInicio = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblInstrutor = new javax.swing.JLabel();
-        lbltxtNomeInstrutor = new javax.swing.JLabel();
+        lblNomeInstrutor = new javax.swing.JLabel();
         lblCPFInstrutor = new javax.swing.JLabel();
         lblCNHInstrutor = new javax.swing.JLabel();
         lblDataNascInstrutor = new javax.swing.JLabel();
@@ -170,12 +178,88 @@ public class VisualizarJDialog extends javax.swing.JDialog {
         txtTelefoneInstrutor = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAulas = new javax.swing.JTable();
-        btnAgenda = new javax.swing.JButton();
-        btnFechar = new javax.swing.JButton();
-        btnRemover = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lblAdministrativo.setText("Informações administrativas:");
+
+        lblNomeAdm.setText("Nome:");
+
+        txtNomeAdm.setText("jLabel2");
+
+        lblCargoAdm.setText("Cargo:");
+
+        txtCargoAdm.setText("jLabel4");
+
+        lblDataInicio.setText("Data de Início:");
+
+        txtDataInicio.setText("jLabel6");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblAdministrativo)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lblNomeAdm)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNomeAdm))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lblCargoAdm)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCargoAdm))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lblDataInicio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDataInicio)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblAdministrativo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNomeAdm)
+                    .addComponent(txtNomeAdm))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCargoAdm)
+                    .addComponent(txtCargoAdm))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDataInicio)
+                    .addComponent(txtDataInicio))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
+        btnAgenda.setText("Agendar Nova Aula");
+        btnAgenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgendaActionPerformed(evt);
+            }
+        });
+
+        btnFechar.setText("Fechar");
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
+            }
+        });
+
+        btnRemover.setText("Remover Aula");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText("Informações sobre Curso de Direção");
 
         lblNomeAluno.setText("Nome:");
 
@@ -273,65 +357,9 @@ public class VisualizarJDialog extends javax.swing.JDialog {
                 .addContainerGap(11, Short.MAX_VALUE))
         );
 
-        lblAdministrativo.setText("Informações administrativas:");
-
-        lblNomeAdm.setText("Nome:");
-
-        txtNomeAdm.setText("jLabel2");
-
-        lblCargoAdm.setText("Cargo:");
-
-        txtCargoAdm.setText("jLabel4");
-
-        lblDataInicio.setText("Data de Início:");
-
-        txtDataInicio.setText("jLabel6");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblAdministrativo)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(lblNomeAdm)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNomeAdm))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(lblCargoAdm)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCargoAdm))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(lblDataInicio)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDataInicio)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblAdministrativo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNomeAdm)
-                    .addComponent(txtNomeAdm))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCargoAdm)
-                    .addComponent(txtCargoAdm))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDataInicio)
-                    .addComponent(txtDataInicio))
-                .addContainerGap(12, Short.MAX_VALUE))
-        );
-
         lblInstrutor.setText("Informações do Instrutor:");
 
-        lbltxtNomeInstrutor.setText("Nome:");
+        lblNomeInstrutor.setText("Nome:");
 
         lblCPFInstrutor.setText("CPF:");
 
@@ -367,7 +395,7 @@ public class VisualizarJDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDataNascInstrutor))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbltxtNomeInstrutor)
+                        .addComponent(lblNomeInstrutor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNomeInstrutor))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -388,7 +416,7 @@ public class VisualizarJDialog extends javax.swing.JDialog {
                 .addComponent(lblInstrutor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbltxtNomeInstrutor)
+                    .addComponent(lblNomeInstrutor)
                     .addComponent(txtNomeInstrutor))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -430,20 +458,6 @@ public class VisualizarJDialog extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblAulas);
 
-        btnAgenda.setText("Agendar Nova Aula");
-
-        btnFechar.setText("Fechar");
-        btnFechar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFecharActionPerformed(evt);
-            }
-        });
-
-        btnRemover.setText("Remover Aula");
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("Informações sobre Curso de Direção");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -470,7 +484,7 @@ public class VisualizarJDialog extends javax.swing.JDialog {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -484,14 +498,14 @@ public class VisualizarJDialog extends javax.swing.JDialog {
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgenda)
                     .addComponent(btnFechar)
                     .addComponent(btnRemover))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -500,6 +514,38 @@ public class VisualizarJDialog extends javax.swing.JDialog {
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void btnAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendaActionPerformed
+        AgendaJDialog tela = new AgendaJDialog(this, rootPaneCheckingEnabled);
+        tela.setCurso(curso);
+        tela.setVisible(true);
+        carregaAulas(curso);
+    }//GEN-LAST:event_btnAgendaActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        Aula aulaSel = getAulaSelecionada();
+        if (aulaSel != null) {
+            int delOp = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja remover aula " + aulaSel + "?");
+            if (delOp == JOptionPane.YES_OPTION) {
+                curso.removeAula(aulaSel);
+                try{
+                    jpa.persist(curso);
+                    carregaAulas(curso);
+                }catch (Exception ex) {
+                    Logger.getLogger(AlunoFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                try {
+//                    jpa.remover(aulaSel);
+//                    JOptionPane.showMessageDialog(rootPane, "Veículo removido com sucesso!");
+//                    carregaAulas(curso);
+//                } catch (Exception e) {
+//                    System.err.println("Erro ao remover aula " + aulaSel + "\nErro: " + e.getMessage());
+                } finally {
+                    jpa.fecharConexao();
+                }
+            }
+        }
+    }//GEN-LAST:event_btnRemoverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -518,31 +564,36 @@ public class VisualizarJDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VisualizarJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisualizarFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VisualizarJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisualizarFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VisualizarJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisualizarFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VisualizarJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VisualizarFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                VisualizarJDialog dialog = new VisualizarJDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+                new VisualizarFrame().setVisible(true);
             }
         });
     }
     
+        private Aula getAulaSelecionada() {
+        int linhaSelecionada = tblAulas.getSelectedRow(); // Obtém a linha selecionada
+        if (linhaSelecionada >= 0) { // Quando não tem nenhum objeto selecionado retorna -1
+            DefaultTableModel modeloTabela = (DefaultTableModel) tblAulas.getModel();
+            Aula aulaSelecionada = (Aula)modeloTabela.getValueAt(linhaSelecionada, 0); // A coluna 0 contém o objeto Veiculo
+            return aulaSelecionada;
+        } else {
+            JOptionPane.showMessageDialog(this, "Nenhuma linha selecionada.");
+            return null;
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgenda;
     private javax.swing.JButton btnFechar;
@@ -565,10 +616,10 @@ public class VisualizarJDialog extends javax.swing.JDialog {
     private javax.swing.JLabel lblMatriculaAluno;
     private javax.swing.JLabel lblNomeAdm;
     private javax.swing.JLabel lblNomeAluno;
+    private javax.swing.JLabel lblNomeInstrutor;
     private javax.swing.JLabel lblRenach;
     private javax.swing.JLabel lblTelefone;
     private javax.swing.JLabel lblTelefoneAluno;
-    private javax.swing.JLabel lbltxtNomeInstrutor;
     private javax.swing.JTable tblAulas;
     private javax.swing.JLabel txtCNHInstrutor;
     private javax.swing.JLabel txtCPFAluno;

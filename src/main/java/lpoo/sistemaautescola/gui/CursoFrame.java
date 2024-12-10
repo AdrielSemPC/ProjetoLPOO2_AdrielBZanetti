@@ -408,14 +408,14 @@ public class CursoFrame extends javax.swing.JFrame {
                 if(curSel.getAluno() == null || curSel.getInstrutor() == null){
                     JOptionPane.showMessageDialog(rootPane, "Aviso: Aluno/Instrutor são valores vazios.");
                 }
-                VisualizarJDialog tela = new VisualizarJDialog(this, rootPaneCheckingEnabled);
+                VisualizarFrame tela = new VisualizarFrame();
                 tela.setCurso(curSel);
                 tela.setVisible(true);
-                carregaCursos();
             }
         }else{
             JOptionPane.showMessageDialog(rootPane, "Selecionar funcionário administrativo antes de continuar.");
         }
+        carregaCursos();
     }//GEN-LAST:event_btnVisualizarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed

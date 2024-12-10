@@ -32,6 +32,7 @@ public class MainFrame extends javax.swing.JFrame {
         btnInstrutor = new javax.swing.JMenuItem();
         btnFuncionario = new javax.swing.JMenuItem();
         btnAgenda = new javax.swing.JMenu();
+        btnCursos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,6 +65,15 @@ public class MainFrame extends javax.swing.JFrame {
         barraMenu.add(btnCadastro);
 
         btnAgenda.setText("Agenda");
+
+        btnCursos.setText("Cursos");
+        btnCursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCursosActionPerformed(evt);
+            }
+        });
+        btnAgenda.add(btnCursos);
+
         barraMenu.add(btnAgenda);
 
         setJMenuBar(barraMenu);
@@ -96,6 +106,11 @@ public class MainFrame extends javax.swing.JFrame {
         InstrutorFrame telaInstrutor = new InstrutorFrame();
         telaInstrutor.setVisible(true);
     }//GEN-LAST:event_btnInstrutorActionPerformed
+
+    private void btnCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursosActionPerformed
+        CursoFrame tela = new CursoFrame();
+        tela.setVisible(true);
+    }//GEN-LAST:event_btnCursosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -137,6 +152,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu btnAgenda;
     private javax.swing.JMenuItem btnAluno;
     private javax.swing.JMenu btnCadastro;
+    private javax.swing.JMenuItem btnCursos;
     private javax.swing.JMenuItem btnFuncionario;
     private javax.swing.JMenuItem btnInstrutor;
     // End of variables declaration//GEN-END:variables

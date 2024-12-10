@@ -38,7 +38,7 @@ public class Aula implements Serializable {
     private Boolean concluida;
     
     @ManyToOne
-    @JoinColumn(name = "curso_id", nullable = false)
+    @JoinColumn(name = "curso_id")
     private Curso curso;
     
     @Override

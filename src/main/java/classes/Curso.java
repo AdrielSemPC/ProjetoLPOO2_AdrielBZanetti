@@ -52,6 +52,9 @@ public class Curso implements Serializable {
    @Column(name = "finalizado")
    private Boolean finalizado;
    
+    public Curso(){
+        aulas = new ArrayList<>();
+    }
     public void addAula(Aula aula) {
         aulas.add(aula);
         aula.setCurso(this);
