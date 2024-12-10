@@ -249,8 +249,8 @@ public class FuncionarioFrame extends javax.swing.JFrame {
                 if(admSel.getCurso()!=null){
                     admSel.setCurso(null);
                     for(Curso c : aux){
-                        c.setAdministrativo(null);
                         try{
+                            c.setAdministrativo(null);
                             jpa.persist(c);
                         }catch (Exception ex) {
                             Logger.getLogger(AlunoFrame.class.getName()).log(Level.SEVERE, null, ex);

@@ -26,6 +26,8 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         barraMenu = new javax.swing.JMenuBar();
         btnCadastro = new javax.swing.JMenu();
         btnAluno = new javax.swing.JMenuItem();
@@ -33,8 +35,15 @@ public class MainFrame extends javax.swing.JFrame {
         btnFuncionario = new javax.swing.JMenuItem();
         btnAgenda = new javax.swing.JMenu();
         btnCursos = new javax.swing.JMenuItem();
+        btnAjuda = new javax.swing.JMenu();
+        btnSobre = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jLabel1.setText("Sistema AUTO - CFC Barril");
+
+        jLabel2.setText("<html> <p> Bem-vindo ao Sistema AUTO! </p> </html>");
 
         btnCadastro.setText("Cadastro");
 
@@ -76,17 +85,39 @@ public class MainFrame extends javax.swing.JFrame {
 
         barraMenu.add(btnAgenda);
 
+        btnAjuda.setText("Ajuda");
+
+        btnSobre.setText("Sobre");
+        btnSobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSobreActionPerformed(evt);
+            }
+        });
+        btnAjuda.add(btnSobre);
+
+        barraMenu.add(btnAjuda);
+
         setJMenuBar(barraMenu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addContainerGap(198, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 277, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(117, Short.MAX_VALUE))
         );
 
         pack();
@@ -111,6 +142,11 @@ public class MainFrame extends javax.swing.JFrame {
         CursoFrame tela = new CursoFrame();
         tela.setVisible(true);
     }//GEN-LAST:event_btnCursosActionPerformed
+
+    private void btnSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSobreActionPerformed
+        SobreFrame tela = new SobreFrame();
+        tela.setVisible(true);
+    }//GEN-LAST:event_btnSobreActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,10 +186,14 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenu btnAgenda;
+    private javax.swing.JMenu btnAjuda;
     private javax.swing.JMenuItem btnAluno;
     private javax.swing.JMenu btnCadastro;
     private javax.swing.JMenuItem btnCursos;
     private javax.swing.JMenuItem btnFuncionario;
     private javax.swing.JMenuItem btnInstrutor;
+    private javax.swing.JMenuItem btnSobre;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }

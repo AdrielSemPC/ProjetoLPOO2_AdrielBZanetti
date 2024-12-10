@@ -137,19 +137,18 @@ public class AgendaJDialog extends javax.swing.JDialog {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        Date novaData = new Date();
         String data = txtData.getText();
         String hora = (String)cmbHora.getSelectedItem();
         String dataHora = data+" "+hora;
         try {
+            Date novaData = new Date();
             novaData = f.parse(dataHora);
             Aula auxAula = new Aula();
             auxAula.setDia_aula(novaData);
             auxAula.setConcluida(false);
-            auxAula.setCurso(c);
-            c.addAula(auxAula);
             try{
-                jpa.persist(c);
+                c.addAula(auxAula);
+                jpa.persist(auxAula);
             }catch(Exception e){
                 System.out.println("Erro :"+e);
             }

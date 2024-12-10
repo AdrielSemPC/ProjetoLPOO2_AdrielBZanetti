@@ -232,8 +232,8 @@ public class InstrutorFrame extends javax.swing.JFrame {
                 if(iSel.getCurso()!=null){
                     iSel.setCurso(null);
                     for(Curso c : aux){
-                        c.setInstrutor(null);
                         try{
+                            c.setInstrutor(null);
                             jpa.persist(c);
                         }catch (Exception ex) {
                             Logger.getLogger(AlunoFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -247,10 +247,10 @@ public class InstrutorFrame extends javax.swing.JFrame {
                 }
                 try {
                     jpa.remover(iSel);
-                    JOptionPane.showMessageDialog(rootPane, "Veículo removido com sucesso!");
+                    JOptionPane.showMessageDialog(rootPane, "Instrutor removido com sucesso!");
                     carregaInstrutores();
                 } catch (Exception e) {
-                    System.err.println("Erro ao remover veículo " + iSel + "\nErro: " + e.getMessage());
+                    System.err.println("Erro ao remover instrutor " + iSel + "\nErro: " + e.getMessage());
                 } finally {
                     jpa.fecharConexao();
                 }

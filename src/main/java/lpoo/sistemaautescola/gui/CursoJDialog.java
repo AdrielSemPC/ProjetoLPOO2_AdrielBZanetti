@@ -159,8 +159,10 @@ public class CursoJDialog extends javax.swing.JDialog {
         if(curso.getData_inicio() == null){
             curso.setData_inicio(data);
         }
-        if(curso.getCarga_horaria() == 0){
-            curso.setCarga_horaria(0);
+        if((Categoria) cmbCategoria.getSelectedItem() == Categoria.A || (Categoria) cmbCategoria.getSelectedItem() == Categoria.B){
+            curso.setCarga_horaria(20);
+        }else{
+            curso.setCarga_horaria(15);
         }
         if(curso.getAulas() == null){
             curso.setAulas(aulas);

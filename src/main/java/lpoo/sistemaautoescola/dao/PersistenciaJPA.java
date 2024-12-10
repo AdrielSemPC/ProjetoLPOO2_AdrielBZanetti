@@ -226,4 +226,65 @@ public class PersistenciaJPA implements InterfaceBD{
         }
         return null;
     }
+
+    public List<Curso> getCursos(String arg, int tipo) {
+        entity = getEntityManager();
+        switch (tipo) {
+            case 0 -> {
+                try {
+                    TypedQuery<Curso> query = entity.createQuery("Select c from Curso c where lower(c.aluno.nome) LIKE :x", Curso.class);
+                    query.setParameter("x", "%" + arg.toLowerCase() + "%");
+                    return query.getResultList();
+                } catch (Exception e) {
+                    System.err.println("Erro ao buscar Cursos: " + e);
+                }
+            }
+            case 1 -> {
+                try {
+                    TypedQuery<Curso> query = entity.createQuery("Select c from Curso c where lower(c.aluno.renach) LIKE :x", Curso.class);
+                    query.setParameter("x", "%" + arg.toLowerCase() + "%");
+                    return query.getResultList();
+                } catch (Exception e) {
+                    System.err.println("Erro ao buscar Cursos: " + e);
+                }
+            }
+            case 2 -> {
+                try {
+                    TypedQuery<Curso> query = entity.createQuery("Select c from Curso c where lower(c.aluno.cpf) LIKE :x", Curso.class);
+                    query.setParameter("x", "%" + arg.toLowerCase() + "%");
+                    return query.getResultList();
+                } catch (Exception e) {
+                    System.err.println("Erro ao buscar Cursos: " + e);
+                }
+            }
+            case 3 -> {
+                try {
+                    TypedQuery<Curso> query = entity.createQuery("Select c from Curso c where lower(c.instrutor.nome) LIKE :x", Curso.class);
+                    query.setParameter("x", "%" + arg.toLowerCase() + "%");
+                    return query.getResultList();
+                } catch (Exception e) {
+                    System.err.println("Erro ao buscar Cursos: " + e);
+                }
+            }
+            case 4 -> {
+                try {
+                    TypedQuery<Curso> query = entity.createQuery("Select c from Curso c where lower(c.instrutor.cnh) LIKE :x", Curso.class);
+                    query.setParameter("x", "%" + arg.toLowerCase() + "%");
+                    return query.getResultList();
+                } catch (Exception e) {
+                    System.err.println("Erro ao buscar Cursos: " + e);
+                }
+            }
+            case 5 -> {
+                try {
+                    TypedQuery<Curso> query = entity.createQuery("Select c from Curso c where lower(c.instrutor.cpf) LIKE :x", Curso.class);
+                    query.setParameter("x", "%" + arg.toLowerCase() + "%");
+                    return query.getResultList();
+                } catch (Exception e) {
+                    System.err.println("Erro ao buscar Cursos: " + e);
+                }
+            }
+        }
+        return null;
+    }
 }

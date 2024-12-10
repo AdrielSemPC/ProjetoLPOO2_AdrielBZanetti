@@ -178,6 +178,7 @@ public class VisualizarFrame extends javax.swing.JFrame {
         txtTelefoneInstrutor = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAulas = new javax.swing.JTable();
+        btnRealizaAula = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -458,35 +459,44 @@ public class VisualizarFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblAulas);
 
+        btnRealizaAula.setText("Realizar Aula");
+        btnRealizaAula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRealizaAulaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(174, 174, 174)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(btnAgenda)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnRemover)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnFechar)
+                        .addGap(174, 174, 174)
+                        .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(87, 87, 87)
+                .addComponent(btnAgenda)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRemover)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRealizaAula)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnFechar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -500,12 +510,13 @@ public class VisualizarFrame extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgenda)
                     .addComponent(btnFechar)
-                    .addComponent(btnRemover))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnRemover)
+                    .addComponent(btnRealizaAula))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -527,25 +538,42 @@ public class VisualizarFrame extends javax.swing.JFrame {
         if (aulaSel != null) {
             int delOp = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja remover aula " + aulaSel + "?");
             if (delOp == JOptionPane.YES_OPTION) {
-                curso.removeAula(aulaSel);
-                try{
-                    jpa.persist(curso);
+                jpa.conexaoAberta();
+                try {
+                    
+                    jpa.remover(aulaSel);
                     carregaAulas(curso);
-                }catch (Exception ex) {
+                } catch (Exception ex) {
                     Logger.getLogger(AlunoFrame.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                try {
-//                    jpa.remover(aulaSel);
-//                    JOptionPane.showMessageDialog(rootPane, "Veículo removido com sucesso!");
-//                    carregaAulas(curso);
-//                } catch (Exception e) {
-//                    System.err.println("Erro ao remover aula " + aulaSel + "\nErro: " + e.getMessage());
-                } finally {
-                    jpa.fecharConexao();
                 }
+                jpa.fecharConexao();
+                
+                curso.removeAula(aulaSel);
             }
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
+
+    private void btnRealizaAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizaAulaActionPerformed
+        Aula aulaSel = getAulaSelecionada();
+        if (aulaSel != null) {
+            if (aulaSel.getConcluida() == false) {
+                int concluiOp = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja marcar a aula " + aulaSel + " como realizada? Não é possível alterar esta informação novamente.");
+                if (concluiOp == JOptionPane.YES_OPTION) {
+                    jpa.conexaoAberta();
+                    try {
+                        aulaSel.setConcluida(true);
+                        jpa.persist(aulaSel);
+                        carregaAulas(curso);
+                    } catch (Exception ex) {
+                        Logger.getLogger(AlunoFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    jpa.fecharConexao();
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Erro: a aula já está marcada como concluída.");
+            }
+        }
+    }//GEN-LAST:event_btnRealizaAulaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -597,6 +625,7 @@ public class VisualizarFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgenda;
     private javax.swing.JButton btnFechar;
+    private javax.swing.JButton btnRealizaAula;
     private javax.swing.JButton btnRemover;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

@@ -31,7 +31,7 @@ public class Aula implements Serializable {
     private long id;
     
     @Column(name = "dia_aula")
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dia_aula;
     
     @Column(name = "aula_concluida")

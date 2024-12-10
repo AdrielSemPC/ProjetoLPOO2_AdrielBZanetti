@@ -54,11 +54,9 @@ public class CursoFrame extends javax.swing.JFrame {
         lblNomeInstrutor = new javax.swing.JLabel();
         txtNomeInstrutor = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
-        lblMatricula = new javax.swing.JLabel();
         lblRenach = new javax.swing.JLabel();
         lblCPFAluno = new javax.swing.JLabel();
         txtCPFAluno = new javax.swing.JTextField();
-        txtMatricula = new javax.swing.JTextField();
         txtRenach = new javax.swing.JTextField();
         lblAluno = new javax.swing.JLabel();
         lblNomeAluno = new javax.swing.JLabel();
@@ -76,19 +74,42 @@ public class CursoFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        lblTitulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblTitulo.setText("Controle de Cursos");
 
         lblCNHInstrutor.setText("CNH:");
 
-        lblInstrutor.setText("Busca por Instrutor");
+        txtCNHInstrutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCNHInstrutorActionPerformed(evt);
+            }
+        });
+        txtCNHInstrutor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCNHInstrutorKeyReleased(evt);
+            }
+        });
+
+        lblInstrutor.setText("Busca por Instrutor:");
 
         lblCPFInstrutor.setText("CPF:");
+
+        txtCPFInstrutor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCPFInstrutorKeyReleased(evt);
+            }
+        });
 
         lblNomeInstrutor.setText("Nome:");
 
         txtNomeInstrutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomeInstrutorActionPerformed(evt);
+            }
+        });
+        txtNomeInstrutor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNomeInstrutorKeyReleased(evt);
             }
         });
 
@@ -101,18 +122,18 @@ public class CursoFrame extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblInstrutor)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNomeInstrutor)
-                            .addComponent(lblCPFInstrutor)
-                            .addComponent(lblCNHInstrutor))
+                        .addComponent(lblNomeInstrutor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNomeInstrutor, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCNHInstrutor)
-                            .addComponent(txtNomeInstrutor)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(txtCPFInstrutor, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
+                        .addComponent(lblCNHInstrutor)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCNHInstrutor, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblCPFInstrutor)
+                        .addGap(12, 12, 12)
+                        .addComponent(txtCPFInstrutor, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,27 +143,21 @@ public class CursoFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNomeInstrutor)
-                    .addComponent(txtNomeInstrutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(2, 2, 2)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNomeInstrutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCNHInstrutor)
-                    .addComponent(txtCNHInstrutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCPFInstrutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCPFInstrutor))
+                    .addComponent(txtCNHInstrutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCPFInstrutor)
+                    .addComponent(txtCPFInstrutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        lblMatricula.setText("Matrícula:");
 
         lblRenach.setText("Renach:");
 
         lblCPFAluno.setText("CPF:");
 
-        txtMatricula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMatriculaActionPerformed(evt);
+        txtCPFAluno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCPFAlunoKeyReleased(evt);
             }
         });
 
@@ -151,14 +166,24 @@ public class CursoFrame extends javax.swing.JFrame {
                 txtRenachActionPerformed(evt);
             }
         });
+        txtRenach.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtRenachKeyReleased(evt);
+            }
+        });
 
-        lblAluno.setText("Busca por Aluno");
+        lblAluno.setText("Busca por Aluno:");
 
         lblNomeAluno.setText("Nome:");
 
         txtNomeAluno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomeAlunoActionPerformed(evt);
+            }
+        });
+        txtNomeAluno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNomeAlunoKeyReleased(evt);
             }
         });
 
@@ -169,26 +194,19 @@ public class CursoFrame extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblAluno)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblMatricula)
-                            .addComponent(lblNomeAluno))
-                        .addGap(7, 7, 7)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtMatricula)
-                            .addComponent(txtNomeAluno)))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(lblRenach)
+                        .addComponent(lblNomeAluno)
+                        .addGap(12, 12, 12)
+                        .addComponent(txtNomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtRenach))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblAluno)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(lblCPFAluno)
-                                .addGap(36, 36, 36)
-                                .addComponent(txtCPFAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(lblRenach)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtRenach, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addComponent(lblCPFAluno)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtCPFAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -199,20 +217,13 @@ public class CursoFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNomeAluno)
-                    .addComponent(txtNomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMatricula)
-                    .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblRenach)
-                    .addComponent(txtRenach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCPFAluno)
-                    .addComponent(txtCPFAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                    .addComponent(txtRenach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblCPFAluno)
+                        .addComponent(txtCPFAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         lblFuncionario.setText("Selecione o Funcionário:");
@@ -221,59 +232,66 @@ public class CursoFrame extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblFuncionario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblTitulo)
-                .addGap(176, 176, 176))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblFuncionario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                .addGap(299, 299, 299))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(lblTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblFuncionario)
-                            .addComponent(cmbFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                            .addComponent(cmbFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17))))
         );
 
         tblCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Aluno", "Instrutor", "Data Início", "Categoria", "Aulas"
+                "ID", "Aluno", "Instrutor", "Data Início", "Categoria", "Carga Horária", "Aulas"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblCursos);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -323,7 +341,7 @@ public class CursoFrame extends javax.swing.JFrame {
                 .addComponent(btnEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnVisualizar)
-                .addGap(63, 63, 63))
+                .addGap(191, 191, 191))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,8 +360,11 @@ public class CursoFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,29 +373,12 @@ public class CursoFrame extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatriculaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMatriculaActionPerformed
-
-    private void txtNomeAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeAlunoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeAlunoActionPerformed
-
-    private void txtNomeInstrutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeInstrutorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeInstrutorActionPerformed
-
-    private void txtRenachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRenachActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtRenachActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         if((Administrativo)cmbFuncionario.getSelectedItem()!=null){
@@ -405,17 +409,25 @@ public class CursoFrame extends javax.swing.JFrame {
         if((Administrativo)cmbFuncionario.getSelectedItem()!=null){
             Curso curSel = getCursoSelecionado();
             if (curSel != null) {
-                if(curSel.getAluno() == null || curSel.getInstrutor() == null){
-                    JOptionPane.showMessageDialog(rootPane, "Aviso: Aluno/Instrutor são valores vazios.");
+                if(curSel.getAluno() == null && curSel.getInstrutor() != null){
+                    JOptionPane.showMessageDialog(rootPane, "Aviso: Aluno não existe mais/não foi selecionado na criação.");
+                }
+                if(curSel.getAluno() != null && curSel.getInstrutor() == null){
+                    JOptionPane.showMessageDialog(rootPane, "Aviso: Instrutor não existe mais/não foi selecionado na criação.");
+                }
+                if(curSel.getAluno() == null && curSel.getInstrutor() == null){
+                    JOptionPane.showMessageDialog(rootPane, "Aviso: Aluno e Instrutor não existem mais/não foram selecionados na criação.");
                 }
                 VisualizarFrame tela = new VisualizarFrame();
                 tela.setCurso(curSel);
                 tela.setVisible(true);
+                
             }
+            carregaCursos();
         }else{
             JOptionPane.showMessageDialog(rootPane, "Selecionar funcionário administrativo antes de continuar.");
         }
-        carregaCursos();
+        
     }//GEN-LAST:event_btnVisualizarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
@@ -423,7 +435,7 @@ public class CursoFrame extends javax.swing.JFrame {
         if (curSel != null) {
             int delOp = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja remover administrativo " + curSel + "?");
             if (delOp == JOptionPane.YES_OPTION) {
-                jpa.conexaoAberta();
+                    jpa.conexaoAberta();
                 try {
                     jpa.remover(curSel);
                     JOptionPane.showMessageDialog(rootPane, "Veículo removido com sucesso!");
@@ -436,6 +448,46 @@ public class CursoFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
+
+    private void txtNomeInstrutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeInstrutorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeInstrutorActionPerformed
+
+    private void txtNomeAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeAlunoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeAlunoActionPerformed
+
+    private void txtRenachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRenachActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRenachActionPerformed
+
+    private void txtCNHInstrutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCNHInstrutorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCNHInstrutorActionPerformed
+
+    private void txtNomeInstrutorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeInstrutorKeyReleased
+        pesquisaCursos(txtNomeInstrutor.getText(), 3);
+    }//GEN-LAST:event_txtNomeInstrutorKeyReleased
+
+    private void txtCNHInstrutorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCNHInstrutorKeyReleased
+        pesquisaCursos(txtCNHInstrutor.getText(), 4);
+    }//GEN-LAST:event_txtCNHInstrutorKeyReleased
+
+    private void txtCPFInstrutorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCPFInstrutorKeyReleased
+        pesquisaCursos(txtCPFInstrutor.getText(), 5);
+    }//GEN-LAST:event_txtCPFInstrutorKeyReleased
+
+    private void txtNomeAlunoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeAlunoKeyReleased
+        pesquisaCursos(txtNomeAluno.getText(), 0);
+    }//GEN-LAST:event_txtNomeAlunoKeyReleased
+
+    private void txtRenachKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRenachKeyReleased
+        pesquisaCursos(txtRenach.getText(), 1);
+    }//GEN-LAST:event_txtRenachKeyReleased
+
+    private void txtCPFAlunoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCPFAlunoKeyReleased
+       pesquisaCursos(txtCPFAluno.getText(), 2);
+    }//GEN-LAST:event_txtCPFAlunoKeyReleased
 
     /**
      * @param args the command line arguments
@@ -490,7 +542,6 @@ public class CursoFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblCPFInstrutor;
     private javax.swing.JLabel lblFuncionario;
     private javax.swing.JLabel lblInstrutor;
-    private javax.swing.JLabel lblMatricula;
     private javax.swing.JLabel lblNomeAluno;
     private javax.swing.JLabel lblNomeInstrutor;
     private javax.swing.JLabel lblRenach;
@@ -499,27 +550,27 @@ public class CursoFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtCNHInstrutor;
     private javax.swing.JTextField txtCPFAluno;
     private javax.swing.JTextField txtCPFInstrutor;
-    private javax.swing.JTextField txtMatricula;
     private javax.swing.JTextField txtNomeAluno;
     private javax.swing.JTextField txtNomeInstrutor;
     private javax.swing.JTextField txtRenach;
     // End of variables declaration//GEN-END:variables
 
     private void carregaCursos() {
+        jpa.conexaoAberta();
         List<Curso> listaCurso = jpa.getCursos();
         DefaultTableModel modeloTabela = (DefaultTableModel) tblCursos.getModel();
         modeloTabela.setRowCount(0);
         for (Curso curso : listaCurso) {
             Object aux1;
             Object aux2;
-            if(curso.getAluno() != null){
-                aux1 = curso.getAluno().getMatricula();
-            }else{
+            if (curso.getAluno() != null) {
+                aux1 = curso.getAluno().getNome();
+            } else {
                 aux1 = "Não existe";
             }
-            if(curso.getInstrutor() != null){
-                aux2 = curso.getInstrutor().getCnh();
-            }else{
+            if (curso.getInstrutor() != null) {
+                aux2 = curso.getInstrutor().getNome();
+            } else {
                 aux2 = "Não existe";
             }
             Object[] linha = {
@@ -528,10 +579,12 @@ public class CursoFrame extends javax.swing.JFrame {
                 aux2,
                 curso.getData_inicio(),
                 curso.getCategoria(),
-                calculaAulas(curso.getAulas())
+                curso.getCarga_horaria(),
+                calculaAulas(curso),
              };
             modeloTabela.addRow(linha);
         }
+        jpa.fecharConexao();
     }
     
     public void carregaCmb(){
@@ -561,7 +614,37 @@ public class CursoFrame extends javax.swing.JFrame {
         }
     }
         
-    public int calculaAulas(List<Aula> aula){
-        return aula.size();
+    public int calculaAulas(Curso c){
+        return c.getAulas().size();
+    }
+    
+    private void pesquisaCursos(String arg, int tipo){
+        List<Curso> listaCursos = jpa.getCursos(arg, tipo);
+        DefaultTableModel modeloTabela = (DefaultTableModel) tblCursos.getModel();
+        modeloTabela.setRowCount(0);
+        Object aux1;
+        Object aux2;
+        for (Curso curso : listaCursos) {
+            if (curso.getAluno() != null) {
+                aux1 = curso.getAluno().getNome();
+            } else {
+                aux1 = "Não existe";
+            }
+            if (curso.getInstrutor() != null) {
+                aux2 = curso.getInstrutor().getNome();
+            } else {
+                aux2 = "Não existe";
+            }
+            Object[] linha = {
+                curso,
+                aux1,
+                aux2,
+                curso.getData_inicio(),
+                curso.getCategoria(),
+                curso.getCarga_horaria(),
+                calculaAulas(curso)
+            };
+            modeloTabela.addRow(linha);
+        }
     }
 }
